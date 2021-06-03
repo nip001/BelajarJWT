@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
+import com.juaracoding.jwthello.model.DAOUser;
+
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -46,8 +48,9 @@ public class JwtTokenUtil implements Serializable{
 		return expiration.before(new Date());
 	}
 	
-	public String generateToken(UserDetails userDetails) {
+	public String generateToken(UserDetails userDetails,String role) {
 		Map<String, Object> claims = new HashMap<>();
+		claims.put("role", role);
 		return doGenerateToken(claims, userDetails.getUsername());
 	}
 	
